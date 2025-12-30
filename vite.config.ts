@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/reactjs-template/',
+  base: '/rect-tg-loyalty-app/',
   css: {
     preprocessorOptions: {
       scss: {
@@ -23,15 +23,17 @@ export default defineConfig({
     // Creates a custom SSL certificate valid for the local machine.
     // Using this plugin requires admin rights on the first dev-mode launch.
     // https://www.npmjs.com/package/vite-plugin-mkcert
-    process.env.HTTPS && mkcert(),
+    // process.env.HTTPS && mkcert(),
   ],
   build: {
     target: 'esnext',
     minify: 'terser'
   },
   publicDir: './public',
+
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
+    port: 3000,
     host: true,
   },
 });
