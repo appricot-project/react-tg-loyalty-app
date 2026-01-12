@@ -10,6 +10,8 @@ import { store, persistor } from "@/store/store";
 
 import { NavBar } from "./NavBar";
 
+import "@telegram-apps/telegram-ui/dist/styles.css";
+
 export function App() {
   const lp = useLaunchParams();
   const isDark = useSignal(miniApp.isDark);
@@ -29,32 +31,21 @@ export function App() {
           platform={["macos", "ios"].includes(lp.tgWebAppPlatform) ? "ios" : "base"}
         >
           {demoMode && (
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                background: "#ff9800",
-                color: "#fff",
-                textAlign: "center",
-                zIndex: 1000,
-                fontSize: 12,
-                padding: "2px 0",
-              }}
-            >
+            <div className="fixed top-0 left-0 w-full bg-orange-500 text-white text-center z-[1000] text-xs py-0.5">
               Демо-режим: авторизация не защищена
             </div>
           )}
           <HashRouter>
             <InitTelegramAuth />
             <NavBar />
-            <Routes>
-              {routes.map(({ path, Component }) => (
-                <Route key={path} path={path} element={<Component />} />
-              ))}
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <div className="pb-20">
+              <Routes>
+                {routes.map(({ path, Component }) => (
+                  <Route key={path} path={path} element={<Component />} />
+                ))}
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </div>
           </HashRouter>
         </AppRoot>
       </PersistGate>

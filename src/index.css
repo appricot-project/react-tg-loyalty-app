@@ -1,5 +1,19 @@
+/* @import "tailwindcss"; */
+@import "tailwindcss" layer(base);
+@import "./theme.css" layer(base);
+
+@layer utilities {
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
 body {
   background: var(--tg-theme-secondary-bg-color, white);
   padding: 0;
   margin: 0;
+	
+  font-family: var(--font-sf-pro);
+  color: var(--tg-theme-text-color, #000);
 }
