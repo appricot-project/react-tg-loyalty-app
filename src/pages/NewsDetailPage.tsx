@@ -48,7 +48,7 @@ export const NewsDetailPage = () => {
           <NewsSkeleton />
         ) : (
           <div className="rounded-2xl bg-white border border-[var(--color-gray-100)] shadow-lg p-10 mb-4 flex flex-col items-center animate-[fadein_0.5s]">
-            <h1 className="text-2xl font-bold mb-6 text-[var(--color-gray-700)] text-center leading-tight">
+            <h1 className="text-2xl font-bold mb-6 text-[var(--color-blue-800)] text-center leading-tight">
               {news?.title}
             </h1>
 

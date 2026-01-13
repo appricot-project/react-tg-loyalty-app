@@ -21,12 +21,15 @@ export const NewsList = () => {
 
       {showSkeletons && (
         <div className="flex flex-col gap-3">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-[120px] rounded-2xl bg-[var(--color-gray-800)] animate-[fadein_0.5s]"
-            />
-          ))}
+          {Array.from({ length: 3 }).map(() => {
+            const uniqueKey = `skeleton-${Math.random().toString(36).substr(2, 9)}`;
+            return (
+              <div
+                key={uniqueKey}
+                className="h-[120px] rounded-2xl bg-[var(--color-gray-800)] animate-[fadein_0.5s]"
+              />
+            );
+          })}
         </div>
       )}
 

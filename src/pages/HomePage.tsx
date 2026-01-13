@@ -9,13 +9,15 @@ export const HomePage = () => {
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
 
+  const userAcronym = user ? (user.firstName[0] + (user.lastName?.[0] || "")).toUpperCase() : "";
+
   useEffect(() => {
     if (!user) {
       navigate("/auth", { replace: true });
     }
   }, [user, navigate]);
 
-  const userAcronym = user ? (user.firstName[0] + (user.lastName?.[0] || "")).toUpperCase() : "";
+  if (!user) return null;
 
   return (
     <div className="px-4 py-4">

@@ -14,7 +14,7 @@ export const NavBar = () => (
             className={({ isActive }) =>
               `flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-300 no-underline flex-1 gap-1 ${
                 isActive
-                  ? "bg-[var(--color-gray-100)] text-[var(--color-red-200)]"
+                  ? "bg-[var(--color-gray-100)] text-[var(--color-blue-800)]"
                   : "text-[var(--color-gray-400)] hover:text-[var(--color-gray-700)]"
               }`
             }
