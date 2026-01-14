@@ -1,15 +1,19 @@
-import { App } from '@/components/App.tsx';
-import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
+import { useTranslation } from "react-i18next";
+
+import { App } from "@/components/App.tsx";
+import { ErrorBoundary } from "@/components/ErrorBoundary.tsx";
 
 function ErrorBoundaryError({ error }: { error: unknown }) {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <p>An unhandled error occurred:</p>
+      <p>{t("error.unhandled")}</p>
       <blockquote>
         <code>
           {error instanceof Error
             ? error.message
-            : typeof error === 'string'
+            : typeof error === "string"
               ? error
               : JSON.stringify(error)}
         </code>
@@ -21,7 +25,7 @@ function ErrorBoundaryError({ error }: { error: unknown }) {
 export function Root() {
   return (
     <ErrorBoundary fallback={ErrorBoundaryError}>
-        <App/>
+      <App />
     </ErrorBoundary>
   );
 }

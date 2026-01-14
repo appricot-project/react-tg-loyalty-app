@@ -1,6 +1,7 @@
 import { FileInput } from "@telegram-apps/telegram-ui";
-import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
+import type { ChangeEvent, DragEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 import { uploadReceipt, simulateStatusUpdate } from "@/mocks/mockReceiptAPI";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -17,6 +18,7 @@ interface FileUploadProps {
 }
 
 export const FileUpload = ({ onSuccess }: FileUploadProps) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
   const { isLoading, uploadProgress, error } = useAppSelector((state) => state.receipts);
@@ -26,17 +28,17 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      return "Недопустимый формат файла. Разрешены: JPG, PNG, PDF";
+      return t("upload.errorInvalidFormat");
     }
 
     const fileName = file.name.toLowerCase();
     const hasValidExtension = ALLOWED_EXTENSIONS.some((ext) => fileName.endsWith(ext));
     if (!hasValidExtension) {
-      return "Неверное расширение файла. Разрешены: .jpg, .jpeg, .png, .pdf";
+      return t("upload.errorInvalidExtension");
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return `Размер файла не должен превышать ${MAX_FILE_SIZE / (1024 * 1024)}MB`;
+      return t("upload.errorFileSizeExceeded", { size: MAX_FILE_SIZE / (1024 * 1024) });
     }
 
     return null;
@@ -59,7 +61,7 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
 
   const handleUpload = useCallback(async () => {
     if (!selectedFile) {
-      dispatch(setError("Файл не выбран!"));
+      dispatch(setError(t("upload.noFile")));
       return;
     }
 
@@ -79,14 +81,14 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
       simulateStatusUpdate(receipt.id, STATUS_UPDATE_DELAY);
       onSuccess?.(receipt);
     } catch (err) {
-      dispatch(setError(err instanceof Error ? err.message : "Ошибка при загрузке файла"));
+      dispatch(setError(err instanceof Error ? err.message : t("upload.error")));
     } finally {
       dispatch(setLoading(false));
       dispatch(setUploadProgress(0));
     }
-  }, [selectedFile, user, dispatch, onSuccess]);
+  }, [selectedFile, user, dispatch, onSuccess, t]);
 
-  const handleDragOver = (event: React.DragEvent) => {
+  const handleDragOver = (event: DragEvent) => {
     event.preventDefault();
     setIsDragging(true);
   };
@@ -95,7 +97,7 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
     setIsDragging(false);
   };
 
-  const handleDrop = (event: React.DragEvent) => {
+  const handleDrop = (event: DragEvent) => {
     event.preventDefault();
     setIsDragging(false);
 
@@ -116,10 +118,10 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
   return (
     <div className="w-full">
       <button
-        className={`w-full border-2 border-dashed rounded-xl p-6 text-center transition-all cursor-pointer bg-white ${
+        className={`w-full border-2 border-dashed rounded-xl p-6 text-center transition-all bg-[var(--tg-theme-section-bg-color,#ffffff)] ${
           isDragging
-            ? "border-[var(--color-blue-800)] bg-blue-50"
-            : "border-[var(--color-gray-200)] bg-[var(--color-secondary-bg)]"
+            ? "border-[var(--text-accent)] bg-blue-50"
+            : "border-[var(--color-gray-400)] bg-[var(--color-secondary-bg)]"
         }`}
         type="button"
         onDragLeave={handleDragLeave}
@@ -129,17 +131,13 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
         {!isLoading && !selectedFile && (
           <>
             <div className="text-4xl mb-3">📄</div>
-            <p className="text-sm text-[var(--color-gray-600)] mb-2">
-              Перетащите чек сюда или выберите файл
-            </p>
+            <p className="text-sm text-[var(--color-gray-400)] mb-2">{t("upload.dragOrSelect")}</p>
             <FileInput
               accept=".jpg,.jpeg,.png,.pdf"
-              label="Выбрать файл"
+              label={t("upload.selectFile")}
               onChange={handleFileChange}
             />
-            <p className="text-xs text-[var(--color-gray-400)] mt-3">
-              Поддерживаемые форматы: JPG, PNG, PDF (макс. 10MB)
-            </p>
+            <p className="text-xs text-[var(--color-gray-400)] mt-3">{t("upload.formats")}</p>
           </>
         )}
 
@@ -151,26 +149,26 @@ export const FileUpload = ({ onSuccess }: FileUploadProps) => {
               {(selectedFile.size / 1024).toFixed(2)} KB
             </p>
             <button
-              className="mt-3 bg-blue-800 hover:bg-blue-700 active:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors disabled:bg-[var(--color-gray-200)] disabled:cursor-not-allowed text-sm"
+              className="mt-3 bg-blue-800 text-white font-semibold py-2 px-6 rounded-lg disabled:bg-[var(--color-gray-200)] text-sm"
               disabled={isLoading}
               type="button"
               onClick={handleUpload}
             >
-              Загрузить чек
+              {t("upload.button")}
             </button>
           </div>
         )}
 
         {isLoading && (
           <div className="flex flex-col items-center justify-center gap-2">
-            <div className="w-full bg-[var(--color-gray-200)] rounded-full h-2 overflow-hidden">
+            <div className="w-full bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full bg-blue-800 transition-all rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
             <p className="text-xl font-bold text-blue-800">{uploadProgress.toFixed(0)}%</p>
-            <p className="text-xs text-[var(--color-gray-400)]">Загрузка чека...</p>
+            <p className="text-xs text-[var(--color-gray-400)]">{t("upload.uploading")}</p>
           </div>
         )}
       </button>

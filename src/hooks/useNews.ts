@@ -57,7 +57,7 @@ export const useNews = () => {
     news,
     isLoading: isValidating && size === 1,
     hasMore,
-    error: error ? "Не удалось загрузить новости. Попробуйте позже." : null,
+    error: error ? "news.loadError" : null,
     loader,
   };
 };

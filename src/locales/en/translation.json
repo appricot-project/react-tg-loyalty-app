@@ -1,0 +1,65 @@
+{
+	"auth": {
+		"title": "Authorization via Telegram",
+		"description": "To log in to the app, open it through the Telegram bot. If you see this message, the app is most likely running outside of Telegram and cannot access your data.",
+		"button": "Try again"
+	},
+	"nav": {
+		"auth": "Authorization",
+		"news": "News",
+		"detailNews": "News",
+		"upload": "Upload receipt",
+		"history": "Receipt history"
+	},
+	"banner": "Demo mode: authorization is not fully implemented",
+	"greetings": "Hello",
+	"news": {
+		"title": "News",
+		"noNews": "No news",
+		"noDetailNews": "News not found",
+		"loadError": "Failed to load news. Please try again later.",
+		"loadDetailError": "Failed to load news. Please try again later."
+	},
+	"upload": {
+		"title": "Uploading a receipt",
+		"subtitle": "How does it work?",
+		"step1": "Upload a photo of the receipt",
+		"step2": "The system will automatically process the receipt (usually within a few minutes)",
+		"step3": "Uploaded receipts can be viewed on the Receipt History page",
+		"successWithFile": "Receipt \"{{fileName}}\" uploaded successfully!",
+		"errorInvalidFormat": "Invalid file format. Allowed: JPG, PNG, PDF",
+		"errorInvalidExtension": "Invalid file extension. Allowed: .jpg, .jpeg, .png, .pdf",
+		"errorFileSizeExceeded": "File size must not exceed {{size}}\"MB",
+		"noFile": "No file selected!",
+		"error": "Error uploading receipt",
+		"dragOrSelect": "Drag the receipt here or select a file",
+		"selectFile": "Select file",
+		"formats": "Supported formats: JPG, PNG, PDF (max. 10MB)",
+		"button": "Upload receipt",
+		"uploading": "Uploading receipt..."
+	},
+	"toast": {
+		"close": "Close notification"
+	},
+	"receiptCard": {
+		"back": "Back",
+		"viewReceipt": "View receipt",
+		"moreDetails": "More details"
+	},
+	"error": {
+		"title": "Error",
+		"unhandled": "An unhandled error occurred:"
+	},
+	"history": {
+		"title": "Receipt history",
+		"all": "Total",
+		"filter": "Filter by status",
+		"noReceipts": "No receipts found",
+		"loadError": "Error loading receipts"
+	},
+	"receiptStatus": {
+		"pending": "Pending",
+		"approved": "Approved",
+		"rejected": "Rejected"
+	}
+}

@@ -16,6 +16,6 @@ export const useReceipts = (userId?: number) => {
     receipts: userReceipts,
     allReceipts: receipts,
     isLoading,
-    error: error ? "Ошибка при загрузке чеков" : null,
+    error: error ? "history.loadError" : null,
   };
 };

@@ -6,6 +6,7 @@ export interface User {
   lastName?: string;
   username?: string;
   photoUrl?: string;
+  languageCode?: string;
 }
 
 interface UserState {

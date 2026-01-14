@@ -1,39 +1,49 @@
 import type { ComponentType, JSX } from "react";
 
-import { HomePage } from "@/pages/HomePage";
-import { UploadPage } from "@/pages/UploadPage";
-import { HistoryPage } from "@/pages/HistoryPage";
 import { AuthPage } from "@/pages/AuthPage";
+import { HistoryPage } from "@/pages/HistoryPage";
+import { HomePage } from "@/pages/HomePage";
 import { NewsDetailPage } from "@/pages/NewsDetailPage";
+import { UploadPage } from "@/pages/UploadPage";
 
 interface Route {
   path: string;
   Component: ComponentType;
   title?: string;
-  icon?: JSX.Element;
+  icon?: JSX.Element | string;
   showInNavBar?: boolean;
 }
 
 export const routes: Route[] = [
-  { path: "/", Component: HomePage, title: "Новости", icon: "📰", showInNavBar: true },
+  {
+    path: "/auth",
+    Component: AuthPage,
+    title: "nav.auth",
+  },
+  {
+    path: "/",
+    Component: HomePage,
+    title: "nav.news",
+    icon: "📰",
+    showInNavBar: true,
+  },
   {
     path: "/news/:id",
     Component: NewsDetailPage,
-    title: "Новость",
+    title: "nav.detailNews",
   },
   {
     path: "/upload",
     Component: UploadPage,
-    title: "Загрузка чека",
+    title: "nav.upload",
     icon: "📸",
     showInNavBar: true,
   },
   {
     path: "/history",
     Component: HistoryPage,
-    title: "История чеков",
+    title: "nav.history",
     icon: "📋",
     showInNavBar: true,
   },
-  { path: "/auth", Component: AuthPage, title: "Авторизация" },
 ];

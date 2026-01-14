@@ -61,7 +61,7 @@ export const useReceiptsInfinite = (filterStatus?: ReceiptStatus | "all") => {
     receipts,
     isLoading: isValidating && size === 1,
     hasMore,
-    error: error ? "Не удалось загрузить чеки. Попробуйте позже." : null,
+    error: error ? "history.loadError" : null,
     loader,
   };
 };

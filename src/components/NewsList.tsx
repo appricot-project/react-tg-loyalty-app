@@ -1,10 +1,12 @@
 import { Spinner } from "@telegram-apps/telegram-ui";
+import { useTranslation } from "react-i18next";
 
 import { useNews } from "@/hooks/useNews";
 
 import { NewsCard } from "./NewsCard";
 
 export const NewsList = () => {
+  const { t } = useTranslation();
   const { news, isLoading, hasMore, error, loader } = useNews();
 
   const showSkeletons = !error && news.length === 0 && isLoading;
@@ -13,9 +15,11 @@ export const NewsList = () => {
   return (
     <>
       {error && (
-        <div className="my-6 p-6 rounded-2xl bg-white border border-[var(--color-gray-100)] text-center">
-          <h3 className="text-lg font-semibold text-[var(--color-red-200)] mb-2">Ошибка</h3>
-          <p className="text-[var(--color-gray-400)]">{error}</p>
+        <div className="my-6 p-6 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-center shadow-lg">
+          <h3 className="text-lg font-semibold text-[var(--color-red-200)] mb-2">
+            {t("error.title")}
+          </h3>
+          <p className="text-[var(--color-gray-400)]">{t(error)}</p>
         </div>
       )}
 
@@ -26,7 +30,7 @@ export const NewsList = () => {
             return (
               <div
                 key={uniqueKey}
-                className="h-[120px] rounded-2xl bg-[var(--color-gray-800)] animate-[fadein_0.5s]"
+                className="h-[120px] rounded-2xl bg-[var(--bg-secondary)] animate-[fadein_0.5s] border border-[var(--border-color)]"
               />
             );
           })}

@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+
+import i18n from "@/libs/i18n";
 import { useAppDispatch } from "@/store/hooks";
 import { setUser } from "@/store/userSlice";
 
@@ -18,6 +20,7 @@ declare global {
             last_name?: string;
             username?: string;
             photo_url?: string;
+            language_code?: string; // язык ОС, не телеграмма
           };
         };
         ready?: () => void;
@@ -44,8 +47,17 @@ export const useTelegramAuth = () => {
             lastName: user.last_name,
             username: user.username,
             photoUrl: user.photo_url,
+            languageCode: user.language_code,
           }),
         );
+
+        const lang = user.language_code;
+        if (lang) {
+          const language = lang.startsWith("ru") ? "ru" : "en";
+          if (i18n.language !== language) {
+            i18n.changeLanguage(language);
+          }
+        }
       }
     } else {
       const initData = tg.initData;
@@ -69,6 +81,6 @@ export const useTelegramAuth = () => {
         });
     }
 
-    tg.ready && tg.ready();
+    tg.ready?.();
   }, [dispatch]);
 };

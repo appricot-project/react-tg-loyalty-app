@@ -16,10 +16,6 @@ export const useNewsDetail = (id?: string) => {
   return {
     news: news || null,
     isLoading,
-    error: error
-      ? "Не удалось загрузить новость"
-      : !news && !isLoading && id
-        ? "Новость не найдена"
-        : null,
+    error: error ? "news.loadDetailError" : !news && !isLoading && id ? "news.noDetailNews" : null,
   };
 };

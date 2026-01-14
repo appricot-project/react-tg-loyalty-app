@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export type ToastType = "success" | "error" | "info" | "warning";
 
@@ -37,6 +38,8 @@ const getStyles = (type: ToastType): string => {
 };
 
 export const Toast = ({ messages, onRemove }: ToastProps) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     const timers = messages.map((msg) => {
       const duration = msg.duration || 4000;
@@ -64,8 +67,8 @@ export const Toast = ({ messages, onRemove }: ToastProps) => {
           <span className="flex-1">{msg.message}</span>
 
           <button
-            aria-label="Закрыть уведомление"
-            className="shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+            aria-label={t("toast.close")}
+            className="shrink-0 opacity-70"
             type="button"
             onClick={() => onRemove(msg.id)}
           >
