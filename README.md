@@ -3,9 +3,9 @@
 Telegram Mini App на основе React Template
 
 <div align="center">
-  <img src="screenshots/news.png" alt="Новости" width="300"/>
-  <img src="screenshots/upload.png" alt="Загрузка чека" width="300"/>
-  <img src="screenshots/history.png" alt="История чеков" width="300"/>
+  <img src="screenshots/news.png" alt="Новости" width="300"/> <br />
+  <img src="screenshots/upload.png" alt="Загрузка чека" width="600"/> <br />
+  <img src="screenshots/history.png" alt="История чеков" width="300"/> <br />
 </div>
 
 ## Технологии
