@@ -37,5 +37,8 @@ export default defineConfig({
     // Exposes your dev server and makes it accessible for the devices in the same network.
     port: 3000,
     host: true,
+    // Inotify events are not propagated through Docker bind mounts on Windows/macOS,
+    // so the dev container enables polling via VITE_USE_POLLING.
+    watch: process.env.VITE_USE_POLLING === 'true' ? { usePolling: true, interval: 300 } : undefined,
   },
 });

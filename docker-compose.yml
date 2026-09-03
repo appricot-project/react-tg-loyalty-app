@@ -1,0 +1,48 @@
+services:
+  # Production-сборка, раздаётся через nginx: http://localhost:8080/
+  app:
+    build:
+      context: .
+      target: prod
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+        VITE_API_URL: ${VITE_API_URL:-}
+        VITE_DEMO_MODE: ${VITE_DEMO_MODE:-true}
+    image: rect-tg-loyalty-app:prod
+    container_name: tg-loyalty-app
+    ports:
+      - "${APP_PORT:-8080}:80"
+    restart: unless-stopped
+
+  # Dev-сервер Vite с HMR: docker compose --profile dev up dev
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: dev
+    image: rect-tg-loyalty-app:dev
+    container_name: tg-loyalty-app-dev
+    ports:
+      - "${DEV_PORT:-3000}:3000"
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+      VITE_API_URL: ${VITE_API_URL:-}
+      VITE_DEMO_MODE: ${VITE_DEMO_MODE:-true}
+      # Bind-mount на Windows/macOS не отдаёт inotify-события — включаем поллинг
+      VITE_USE_POLLING: "true"
+    volumes:
+      - .:/app
+      # node_modules берём из образа, а не с хоста
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+
+  # Разовая проверка сборки и типов: docker compose --profile check run --rm check
+  check:
+    profiles: ["check"]
+    build:
+      context: .
+      target: dev
+    image: rect-tg-loyalty-app:dev
+    container_name: tg-loyalty-app-check
+    command: sh -c "npm run build && npx biome ci ."
